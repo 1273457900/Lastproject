@@ -42,7 +42,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="addfriends"
+
+                android:clickable="true"
+                android:onClick="friends"
                 app:srcCompat="@drawable/ic_add_white_24dp" /><!--允许使用矢量图形-->
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

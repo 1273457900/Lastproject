@@ -18,6 +18,7 @@ public class DrinkCategoryActivity extends AppCompatActivity {
 
     //指定适配器 适配drinks数组
         ArrayAdapter<Drink> listAdaper = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,Drink.drinks);
+
         ListView listDrinks = (ListView)findViewById(R.id.list_drinks);
         listDrinks.setAdapter(listAdaper);
         //指定监听器 响应选项单击
