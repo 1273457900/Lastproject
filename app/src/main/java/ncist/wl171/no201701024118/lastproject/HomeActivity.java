@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     Button btn_search;
     Button btn_addfriends;
     ArrayList<User> friendsList;
+    ArrayList<User> friendList;
     final List<String> components = new ArrayList<>();
 
     //Handler对象，用于接收“登录子线程”发送过来的消息
@@ -106,10 +107,6 @@ public class HomeActivity extends AppCompatActivity {
         ListView lv_friends = findViewById(R.id.lv_friends);
         lv_friends.setAdapter(adapter);
 
-
-
-
-
     }
 
 
@@ -144,6 +141,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = View.inflate(getApplicationContext(), R.layout.home_view_listitem, null);
+
             TextView tv_username = view.findViewById(R.id.tv_username);
             ImageView iv_ico = view.findViewById(R.id.iv_ico);
             User user = (User) getItem(position);
@@ -158,7 +156,40 @@ public class HomeActivity extends AppCompatActivity {
             return view;
         }
     }
+    class myBaseAdapter2 extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return friendList.size();
+        }
 
+        @Override
+        public Object getItem(int position) {
+            return friendList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = View.inflate(getApplicationContext(), R.layout.home_view_listitem, null);
+
+            TextView tv_username = view.findViewById(R.id.tv_username);
+            ImageView iv_ico = view.findViewById(R.id.iv_ico);
+            User user = (User) getItem(position);
+            tv_username.setText(user.getUsername());
+            iv_ico.setImageResource(R.drawable.sun);
+            String imageUrl = SERVICE_UAP_URL + user.getUserID() + ".png";
+            Log.d("测试", "imageUrl:" + imageUrl);
+            Glide.with(HomeActivity.this)
+                    .load(imageUrl)
+                    .error(R.drawable.sun)  //任选
+                    .into(iv_ico);
+            return view;
+        }
+    }
 
 
 
@@ -264,7 +295,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private int search(View view) {
+    private int search(final View view) {
 
 
         se_username =view.findViewById(R.id.search_username);
@@ -279,7 +310,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 //  sharedPreferences.edit().putString("jsonString",s).commit(); //将接送字符串保存起来，下次直接登录
-                parseJsonString(s);  //解析从服务器获取到的JSON字符串，给类成员赋值
+                parseJsonString(s,view);  //解析从服务器获取到的JSON字符串，给类成员赋值
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() { //未成功得到服务器响应时的监听器
@@ -310,14 +341,29 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void parseJsonString(String s) {  //解析从服务器获取到的JSON字符串，给类成员赋值
+    private void parseJsonString(String s,View view) {  //解析从服务器获取到的JSON字符串，给类成员赋值
         try {
             //将JSON字符串转化为JSON对象
             JSONObject resultObject = new JSONObject(s);
             status = resultObject.getInt("status"); //设置用户的登录状态
             //设置用户
             JSONObject userObject = resultObject.getJSONObject("user");
-            user = new User(userObject.getInt("userID"), userObject.getString("username"));
+            //设置搜索用户
+           // user = new User(userObject.getInt("userID"), userObject.getString("username"));
+            friendList = new ArrayList<User>();
+                    long userID = userObject.getLong("userID");
+                    String username = userObject.getString("username");
+                    User user = new User(userID, username);
+            friendList.add(user);
+
+            myBaseAdapter2 adapter = new myBaseAdapter2();
+            ListView lv_friend = view.findViewById(R.id.search_friend);
+            lv_friend.setAdapter(adapter);
+
+
+
+
+
 
 //            //设置该用户的好友
 //            JSONArray friendsArray = resultObject.getJSONArray("friends");
