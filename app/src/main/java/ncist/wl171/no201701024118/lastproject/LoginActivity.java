@@ -300,6 +300,7 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, ?> map = sharedPreferences.getAll();
                 if(map.containsKey(et_username.getText().toString())){
                     userID = (Long) (map.get(et_username.getText().toString()));
+                    userID=userID%4;
                     String imageUrl = SERVICE_UAP_URL +userID+".png";
                     //使用Android图片加载框架Glide 3.7.0
                     Glide.with(LoginActivity.this)

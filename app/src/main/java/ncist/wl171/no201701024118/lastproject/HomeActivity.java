@@ -55,7 +55,7 @@ import java.util.Map;
  */
 public class HomeActivity extends AppCompatActivity {
 
-    static String SERVICE_ROOT_URL = "http://192.168.2.104:8080/LoginServlet/"; //要与LoginActivity里一致！
+    static String SERVICE_ROOT_URL = "http://182.92.71.44:7999/LoginServlet/"; //要与LoginActivity里一致！
     static String SERVICE_UAP_URL = SERVICE_ROOT_URL + "images/UAP/"; //服务器用户头像路径
     static String SERVICE_ROOT_URL2 = "http://182.92.71.44:7999/LoginServlet2/"; //项目的根路径
 
@@ -121,6 +121,11 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+   /* public void news(View view) {
+        Intent intent = new Intent(HomeActivity.this, NewsActivity.class);
+        startActivity(intent);
+    }*/
+
 
     class myBaseAdapter extends BaseAdapter {
         @Override
@@ -147,7 +152,10 @@ public class HomeActivity extends AppCompatActivity {
             User user = (User) getItem(position);
             tv_username.setText(user.getUsername());
             iv_ico.setImageResource(R.drawable.sun);
-            String imageUrl = SERVICE_UAP_URL + user.getUserID() + ".png";
+            long userID;
+            userID=user.getUserID();
+            userID=userID%4;
+            String imageUrl = SERVICE_UAP_URL + userID + ".png";
             Log.d("测试", "imageUrl:" + imageUrl);
             Glide.with(HomeActivity.this)
                     .load(imageUrl)
@@ -181,7 +189,11 @@ public class HomeActivity extends AppCompatActivity {
             User user = (User) getItem(position);
             tv_username.setText(user.getUsername());
             iv_ico.setImageResource(R.drawable.sun);
-            String imageUrl = SERVICE_UAP_URL + user.getUserID() + ".png";
+
+            long userID;
+            userID=user.getUserID();
+            userID=userID%4;
+            String imageUrl = SERVICE_UAP_URL + userID + ".png";
             Log.d("测试", "imageUrl:" + imageUrl);
             Glide.with(HomeActivity.this)
                     .load(imageUrl)
@@ -227,7 +239,7 @@ public class HomeActivity extends AppCompatActivity {
         btn_add = findViewById(R.id.imageView2);
         // btn_register = findViewById(R.id.btn_register);
 
-        btn_add.setOnClickListener(new View.OnClickListener() {  //注册 注册 注册 注册 注册
+        btn_add.setOnClickListener(new View.OnClickListener() {  //搜索  加号按钮
             @Override
             public void onClick(View v) {
                 final View view = View.inflate(HomeActivity.this, R.layout.add_view, null);
@@ -238,7 +250,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 btn_search.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {//搜索按钮
                         new Thread(new Runnable() {
 
                             @Override

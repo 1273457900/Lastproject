@@ -12,7 +12,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary=true;/*允许使用矢量图形*/
+        vectorDrawables.useSupportLibrary = true;/*允许使用矢量图形*/
     }
 
     buildTypes {
@@ -27,10 +27,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'    /*Glide 4.8版相对Android 7.0平台版本过高直接修改版本号后同步*/
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    /*Glide 4.8版相对Android 7.0平台版本过高直接修改版本号后同步*/
 
 
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -41,6 +45,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+//    implementation 'cz.msebera.android:httpclient:4.5.8'
+    implementation 'cz.msebera.android:httpclient:4.4.1.2'
+    //implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
+    // implementation files('../json-lib-2.4-jdk15.jar')
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
 }
